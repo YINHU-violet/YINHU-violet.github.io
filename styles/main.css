@@ -1,0 +1,436 @@
+/* 全局样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    line-height: 1.6;
+    color: #fff;
+    background-color: #000;
+}
+
+/* 导航栏样式 */
+header {
+    background-color: #111;
+    box-shadow: 0 2px 5px rgba(255,255,255,0.1);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fff;
+    position: relative;
+    width: 150px;
+}
+
+.logo::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: -4px;
+    width: 100vw;
+    height: 1px;
+    background-color: #fff;
+}
+
+.logo a {
+    color: #fff;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+}
+
+.logo a:hover {
+    opacity: 0.8;
+}
+
+.logo .small-text {
+    font-size: 1rem;
+    font-weight: normal;
+    opacity: 0.8;
+    margin-right: 0.3rem;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+    padding: 0 2rem;
+}
+
+.categories {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 0.9rem;
+    margin: 0 auto;
+}
+
+.categories a, .categories {
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.categories a:hover {
+    color: #fff;
+}
+
+/* 移除之前可能冲突的样式 */
+.category {
+    text-decoration: none;
+    transition: color 0.3s ease;
+    white-space: nowrap;
+}
+
+.nav-links a:last-child {
+    text-decoration: none;
+    color: #fff;
+    transition: color 0.3s ease;
+    width: 150px;
+    text-align: right;
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.nav-links a:last-child:hover {
+    opacity: 0.8;
+}
+
+/* Draw类别特殊样式 */
+.category[href="draw.html"] {
+    color: rgba(255, 255, 255, 0.3);
+    pointer-events: none;
+}
+
+.category[href="draw.html"]:hover {
+    color: rgba(255, 255, 255, 0.3);
+}
+
+/* 主要内容区域 */
+main {
+    margin-top: 80px;
+    width: 100%;
+    padding: 0;
+}
+
+/* 作品网格 */
+.works-grid {
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    background: #000;
+    gap: 20px;
+}
+
+/* 作品项目样式 */
+.work-item {
+    background: #000;
+    overflow: hidden;
+    margin-bottom: 0;
+    border-radius: 0;
+    box-shadow: none;
+    width: 100%;
+    position: relative;
+}
+
+.work-item.active {
+    z-index: 2; /* 激活时提升层级 */
+}
+
+.work-preview {
+    position: relative;
+    width: 100%;
+    height: 80vh;
+    min-height: 500px;
+    max-height: 800px;
+    overflow: hidden;
+    cursor: pointer;
+    background: #000;
+}
+
+.work-item.active .work-preview {
+    z-index: 0; /* 激活时降低预览区域的层级 */
+}
+
+.preview-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.5s ease;
+    opacity: 0.8;
+    filter: brightness(0.8) blur(2px);
+}
+
+.preview-content {
+    position: absolute;
+    inset: 0;
+    padding: 1.5rem 2rem;
+    background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(0, 0, 0, 0.4) 40%,
+        rgba(0, 0, 0, 0.8) 100%
+    );
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+}
+
+.preview-content h2 {
+    margin: 0;
+    font-size: 2.5rem;
+    font-weight: 600;
+    text-align: center;
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    transition: all 0.5s ease;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    color: #fff;
+}
+
+/* 移除之前添加的额外样式 */
+.preview-content .subtitle {
+    display: none;
+}
+
+.expand-button {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.expand-button::after {
+    content: '';
+    width: 12px;
+    height: 12px;
+    border-right: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    transform: rotate(45deg);
+    transition: all 0.3s ease;
+}
+
+/* 鼠标悬停时箭头动画效果 */
+.work-preview:hover .expand-button::after {
+    transform: rotate(45deg) translate(-2px, -2px);
+}
+
+.work-preview:hover .expand-button {
+    transform: translateX(-50%) translateY(5px);
+}
+
+/* 鼠标悬停在预览区域时，图片变清晰变亮 */
+.work-preview:hover .preview-image {
+    filter: brightness(0.85) blur(0);
+    opacity: 0.9;
+}
+
+/* 标题动画效果 */
+@keyframes fadeOutTitle {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+    50% {
+        opacity: 0.9;
+        transform: translateY(0) scale(1.03);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-20px) scale(1.03);
+    }
+}
+
+/* 鼠标悬停时，0.5秒后标题消失 */
+.work-preview:hover .preview-content h2 {
+    animation: fadeOutTitle 0.5s ease 0.5s forwards;
+}
+
+/* 移除鼠标时立即显示标题 */
+.work-preview:not(:hover) .preview-content h2 {
+    animation: none;
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* 作品详情样式 */
+.work-details {
+    position: absolute;
+    left: 0;
+    right: 0;
+    background: #000;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-20px);
+    transition: all 0.5s ease;
+    z-index: 10;
+}
+
+.work-details.active {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    position: relative;
+}
+
+.work-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    background: #000;
+    color: #fff;
+}
+
+.work-description {
+    margin-bottom: 2rem;
+}
+
+.work-description h3 {
+    color: #fff;
+    margin-bottom: 1rem;
+}
+
+.work-description p {
+    color: #fff;
+    opacity: 0.9;
+}
+
+.video-container {
+    margin-bottom: 2rem;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+}
+
+.video-container video {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: all 0.5s ease;
+}
+
+/* 当详情页激活时，视频淡入并放大到正常大小 */
+.work-details.active .video-container video {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 1rem;
+}
+
+.image-grid img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+/* 并排作品行样式 */
+.work-row {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 0;
+    position: relative;
+    background: #000;
+}
+
+/* 半宽作品项样式 */
+.work-item.half-width {
+    flex: 1;
+    margin-bottom: 0;
+    position: relative;
+    min-height: 80vh;
+    background: #000;
+}
+
+/* 确保预览区域固定位置 */
+.work-item.half-width .work-preview {
+    height: 80vh;
+    min-height: 500px;
+    max-height: 800px;
+    position: relative;
+    z-index: 2;
+}
+
+/* 重新设计半宽作品的详情页样式 */
+.work-item.half-width .work-details {
+    position: relative;
+    width: 100%;
+    background: #000;
+    opacity: 0;
+    visibility: hidden;
+    height: 0;
+    overflow: hidden;
+    transition: opacity 0.5s ease, visibility 0.5s ease, height 0.5s ease;
+    z-index: 3;
+}
+
+.work-item.half-width .work-details.active {
+    opacity: 1;
+    visibility: visible;
+    height: auto;
+    overflow: visible;
+}
+
+/* 调整详情页内容的布局 */
+.work-item.half-width .work-content {
+    padding: 2rem;
+    max-width: 100%;
+    margin: 0 auto;
+    background: #000;
+    color: #fff;
+}
+
+/* 调整图片网格在较窄空间中的显示 */
+.work-item.half-width .image-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.8rem;
+}
+
+.work-item.half-width .image-grid img {
+    height: 150px;
+}
+
+/* 确保视频容器在较窄空间中正确显示 */
+.work-item.half-width .video-container video {
+    max-height: 300px;
+}
+
+/* 页脚样式 */
+footer {
+    text-align: center;
+    padding: 2rem;
+    background: #333;
+    color: #fff;
+} 
